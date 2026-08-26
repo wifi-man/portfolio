@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Émile Gagnon — Portfolio</title>
+  <meta name="description" content="Portfolio personnel d'Émile Gagnon. Projets réseau, domotique, impression 3D et développement web.">
+  <style>
+    :root {
+      --bg-color: #FAF4DF;
+      --text-color: #1a1a1a;
+      --secondary-text: #4a4a4a;
+      --card-bg: rgba(255, 255, 255, 0.4);
+      --card-hover: rgba(255, 255, 255, 0.75);
+      --border-color: rgba(0, 0, 0, 0.08);
+      --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-serif);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 2rem 1.5rem;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* En-tête / Profil */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(15%) contrast(95%);
+      flex-shrink: 0;
+    }
+
+    .profile-info h1 {
+      font-size: 3.2rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+
+    .profile-info p {
+      font-size: 1.25rem;
+      color: var(--secondary-text);
+    }
+
+    /* Navigation sticky (Onglets) */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+      padding: 1rem 0;
+      margin-bottom: 3.5rem;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      font-size: 1.75rem;
+      font-weight: 400; /* Regular */
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.6;
+    }
+
+    /* Sections génériques */
+    .content-section {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 5rem;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .subsection-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .bio-text {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--secondary-text);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Grille de compétences */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .skill-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-card p {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      line-height: 1.4;
+    }
+
+    /* Section Projets avec Boutons */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-color);
+      padding: 1.5rem;
+      border-radius: 8px;
+      background: var(--card-bg);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      background: var(--card-hover);
+    }
+
+    .card-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-content p {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      line-height: 1.4;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-color);
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+      align-self: flex-start;
+    }
+
+    .project-btn:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+      border-color: var(--text-color);
+    }
+
+    .project-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Section Réseaux Sociaux */
+    .social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--text-color);
+      padding: 1rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1.2rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .social-item:hover {
+      background: var(--card-hover);
+      transform: translateX(4px);
+    }
+
+    .social-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .social-icon {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .social-item span.handle {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+    }
+
+    /* Section Contact */
+    .email-direct {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-text);
+    }
+
+    .email-direct a {
+      color: var(--text-color);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dashed var(--text-color);
+      transition: opacity 0.2s;
+    }
+
+    .email-direct a:hover {
+      opacity: 0.7;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 1.1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--text-color);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--text-color);
+      background: #fff;
+    }
+
+    .submit-btn {
+      align-self: flex-start;
+      background: var(--text-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 0.75rem 2rem;
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.85;
+    }
+
+    /* Pied de page */
+    footer {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--secondary-text);
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+
+    /* Adaptation mobile */
+    @media (max-width: 640px) {
+      body {
+        padding: 2rem 1.25rem 1rem;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      .profile-info h1 {
+        font-size: 2.4rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+        font-size: 1.35rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <!-- Profil -->
+    <header class="profile-header">
+      <img src="https://i.postimg.cc/rsL0f7f2/Gemini-Generated-Image-yoptrjyoptrjyopt.png" alt="Émile Gagnon" class="avatar" width="130" height="130">
+      <div class="profile-info">
+        <h1>Émile Gagnon</h1>
+        <p>J'ai 12 ans et je conçois des sites web pour le plaisir</p>
+      </div>
+    </header>
+
+    <!-- Navigation sticky (Onglets) -->
+    <div class="nav-wrapper">
+      <nav class="nav-links">
+        <a href="#about">À propos de moi</a>
+        <a href="#projets">Mes projets</a>
+        <a href="#reseaux">Mes réseaux sociaux</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Section Onglet 1 : À propos de moi -->
+    <section id="about" class="content-section">
+      <h2 class="section-title">À propos de moi</h2>
+      
+      <p class="bio-text">
+        Je suis passionnée d'informatique et de technologies en général. Depuis tout petit, je suis curieux, persévérant et créatif.
+        J'ai fondé plusieurs projets dont GEEK FACTORY et PowerScripts. J'ai même un laboratoire informatique chez moi pour apprendre les réseaux d'entreprises.
+      </p>
+
+      <h3 class="subsection-title">Compétences</h3>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h4>Réseaux domestiques</h4>
+          <p>Je maitrise la configuration de routeurs, point d'accès et systèmes réseaux domestiques.</p>
+        </div>
+        <div class="skill-card">
+          <h4>Infrastructure & Home Lab</h4>
+          <p>Proxmox VE, conteneurs LXC, machines virtuelles et autohébergement.</p>
+        </div>
+        <div class="skill-card">
+          <h4>Réseaux & Sécurité</h4>
+          <p>Configuration de VLANs, pare-feu, DNS filtering (AdGuard) et routage local.</p>
+        </div>
+        <div class="skill-card">
+          <h4>Création de sites web</h4>
+          <p>Création de sites web informatif ou interactif assisté par IA. (Vibe coding)</p>
+        </div>
+        <div class="skill-card">
+          <h4>Services techniques</h4>
+          <p>Je maitrise le réglage de plusieurs bugs, la configuration de téléphone, tablette, NAS et ordinateurs et plus! </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Onglet 2 : Mes Projets -->
+    <section id="projets" class="content-section">
+      <h2 class="section-title">Mes projets</h2>
+      <div class="projects-grid">
+        
+        <article class="card">
+          <div class="card-content">
+            <h3>GEEK FACTORY</h3>
+            <p>Un grand projet regroupant des fiches éducatives, sites web interactifs, guides informatiques et plus encore!</p>
+          </div>
+          <a href="https://www.geek-factory.xyz/" class="project-btn" target="_blank" rel="noopener noreferrer">
+            Voir le site web
+            <svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v6c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2z"/></svg>
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <h3>Sentinel Secure</h3>
+            <p>Un projet sur la sécurité réseau. Il y a des listes de blocages DNS, scripts Python EDR et plus à venir!</p>
+          </div>
+          <a href="https://github.com/orgs/Sentinel-Secure/repositories" class="project-btn" target="_blank" rel="noopener noreferrer">
+            Voir sur GitHub
+            <svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v6c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2z"/></svg>
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <h3>PowerScripts</h3>
+            <p>Une collection de scripts open-source pour PowerShell. Il y a des jeux, pranks et plus!</p>
+          </div>
+          <a href="https://github.com/PowerScripts/PowerScripts" class="project-btn" target="_blank" rel="noopener noreferrer">
+            Voir sur GitHub
+            <svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v6c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2z"/></svg>
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Section Onglet 3 : Réseaux-Sociaux -->
+    <section id="reseaux" class="content-section">
+      <h2 class="section-title">Mes réseaux sociaux</h2>
+      <div class="social-list">
+        
+        <!-- GitHub -->
+        <a href="https://github.com/wifi-man" target="_blank" rel="noopener noreferrer" class="social-item">
+          <div class="social-brand">
+            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <strong>GitHub</strong>
+          </div>
+          <span class="handle">@wifi-man</span>
+        </a>
+
+        <!-- Reddit -->
+        <a href="https://www.reddit.com/user/WifiMan_/" target="_blank" rel="noopener noreferrer" class="social-item">
+          <div class="social-brand">
+            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.167 8a.83.83 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661m1.843 3.647c.315 0 1.403-.038 1.976-.611a.23.23 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83s.83-.381.83-.83a.831.831 0 0 0-1.66 0z"/><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.2.2 0 0 0-.153.028.2.2 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224q-.03.17-.029.353c0 1.795 2.091 3.256 4.669 3.256s4.668-1.451 4.668-3.256c0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165"/>
+            </svg>
+            <strong>Reddit</strong>
+          </div>
+          <span class="handle">u/WifiMan_</span>
+        </a>
+
+        <!-- Discord -->
+        <a href="https://discordapp.com/users/970761122540032030" target="_blank" rel="noopener noreferrer" class="social-item">
+          <div class="social-brand">
+            <svg class="social-icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+            </svg>
+            <strong>Discord</strong>
+          </div>
+          <span class="handle">@wifi.man</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/emile.gagnon0896/" target="_blank" rel="noopener noreferrer" class="social-item">
+          <div class="social-brand">
+            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            <strong>Instagram</strong>
+          </div>
+          <span class="handle">@emile.gagnon0896</span>
+        </a>
+        
+        <!-- Facebook -->
+        <a href="https://facebook.com/emile.gagnon.20281/" target="_blank" rel="noopener noreferrer" class="social-item">
+          <div class="social-brand">
+            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <strong>Facebook</strong>
+          </div>
+          <span class="handle">@emile.gagnon.20281</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Section Onglet 4 : Contact -->
+    <section id="contact" class="content-section">
+      <h2 class="section-title">Contact</h2>
+      
+      <p class="email-direct">
+        Vous pouvez m'écrire directement à : <a href="mailto:hi@emileg.me">hi@emileg.me</a>
+      </p>
+
+      <form class="contact-form" action="https://formspree.io/f/xnpqanql" method="POST">
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input type="text" id="name" name="name" placeholder="Votre nom" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Pied de page -->
+  <footer>
+    <p>Copyright © 2026 Émile Gagnon</p>
+  </footer>
+
+</body>
+</html>
